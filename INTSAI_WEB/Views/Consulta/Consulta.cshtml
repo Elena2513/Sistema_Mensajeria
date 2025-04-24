@@ -1,0 +1,1039 @@
+﻿
+@{
+    ViewBag.Title = "Registrar Consultas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section styles {
+
+    <link href="~/Recursos/Plugin/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown1" data-toggle="dropdown">
+            Buscadores
+        </button>
+        <div class="dropdown-menu">
+            <!-- Al hacer clic en este enlace, se abre el modal "Registro_Nominal" -->
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Registro_Nominal">NOMINAL</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Registro_Vehiculo">VEHICULOS</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Registro_DocAdmon">DOC.ADMINISTRATIVO</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Registro_Pasaporte">PASAPORTE</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Registro_Certificado">CERTIFICADO</a>
+        </div>
+    </div>
+</div>
+
+<!-- REGISTRO NOMINAL -->
+<div class="modal" id="Registro_Nominal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="post" id="Form_Nominal" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro de Consulta Nominal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <div class="card">
+                        <div id="headingCollapse1" class="card-header">
+                            <a data-toggle="collapse" href="#collapse1" aria-expanded="true" aria-controls="collapse1" class="card-title lead">
+                                <i class="icon-android-arrow-dropdown"></i> DIGITE LOS DATOS
+                            </a>
+                        </div>
+                        <div id="collapse1" class="collapse show" aria-labelledby="headingCollapse1">
+                            <div class="card-body">
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>SOLICITANTE</label>
+                                            <select class="form-control" id="solicitnt_Nominal" name="solicitnt_Nominal">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nombre del solicitante</label>
+                                            <input type="text" id="Nombre_Nominal" name="Nombre_Nominal" class="form-control" placeholder="NOMBRE COMPLETO" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <label>Fecha Nacimiento</label>
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" id="fnacimiento" name="fnacimiento" />
+                                        </div>
+                                    </div>
+
+
+                                    <label>Identidad</label>
+                                    <div class="form-row">
+                                        <div class="col-md-5">
+                                            <select id="Ident_Nominal" name="Ident_Nominal" class="form-control">
+                                                <option value="" disabled selected>Tipo</option>
+                                                <option value="cedula">cedula</option>
+                                                <option value="pasaporte">pasaporte</option>
+                                                <option value="visa">visa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>País</label>
+                                            <select class="form-control" id="pais" name="pais">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Motivo Consulta</label>
+                                            <select class="form-control" id="motivo_Nominal" name="motivo_Nominal">
+                                                <option value="">SELECCIONE</option>
+                                                <option value=""> Entrada Internacional</option>
+                                                <option value=""> Entrada Nacional</option>
+                                                <option value=""> Salida Internacional</option>
+                                                <option value=""> Salida Nacional</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5" style="margin-left:30px">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="Ioperativo_Nominal">
+                                                <label class="form-check-label" for="Ioperativo_Nominal">
+                                                    <strong>Interes Operativo</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Resultado</label>
+                                            <select class="form-control" id="Result_Nominal" name="Result_Nominal">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-info btn-AgregarNominal" style="background-color:#2494BE;">Agregar Nominal</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Datos de consulta Nominal -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="color:brown">Total Nominal: <b id="TtalPersNominal"></b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nombre Persona</th>
+                                                    <th>Fecha</th>
+                                                    <th>Doc.Identidad</th>
+                                                    <th>País Origen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Table-Nominal"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-GuardarNominal">Guardar Datos</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- REGISTRO VEHICULO-->
+<div class="modal" id="Registro_Vehiculo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="post" id="Form_Vehiculo" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro de Vehiculo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <div class="card">
+                        <div id="headingCollapse2" class="card-header">
+                            <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2" class="card-title lead">
+                                <i class="icon-android-arrow-dropdown"></i> DIGITE LOS DATOS
+                            </a>
+                        </div>
+                        <div id="collapse2" class="collapse show" aria-labelledby="headingCollapse2">
+                            <div class="card-body">
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>SOLICITANTE</label>
+                                            <select class="form-control" id="solicitnt_Nominal" name="solicitnt_Nominal">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>CHASIS</label>
+                                            <input type="text" id="chasis" name="chasis" class="form-control" placeholder="CHASIS" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>VIN</label>
+                                            <input type="text" id="vin" name="vin" class="form-control" placeholder="VIN" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:5px">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>PLACA</label>
+                                            <input type="text" id="placa" name="placa" class="form-control" placeholder="PLACA" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>MOTOR</label>
+                                            <input type="text" id="motor" name="motor" class="form-control" placeholder="MOTOR" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Motivo Consulta</label>
+                                            <select class="form-control" id="motivo_Veh" name="motivo_Veh">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5" style="margin-left:30px">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="IntOperat_Vehiculo">
+                                                <label class="form-check-label" for="IntOperat_Vehiculo">
+                                                    <strong>Interes Operativo</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Resultado</label>
+                                            <select class="form-control" id="Result_Vehiculo" name="Result_Vehiculo">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-info btn-AgregarVehiculo" style="background-color:#2494BE;">Agregar Vehiculo</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Datos del Vehiculo-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="color:brown">Total Vehiculo: <b id="TtalVehiculo"></b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>chasis</th>
+                                                    <th>Placa</th>
+                                                    <th>Vin</th>
+                                                    <th>Motor</th>
+                                                    <th>Motivo Consulta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Table-Vehiculo"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-GuardarVehiculo">Guardar Datos</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- REGISTRO DOC.ADMINISTRATIVO-->
+<div class="modal" id="Registro_DocAdmon" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="post" id="Form_Admon" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Documento Administrativo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <div class="card">
+                        <div id="headingCollapse3" class="card-header">
+                            <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3" class="card-title lead">
+                                <i class="icon-android-arrow-dropdown"></i> DIGITE LOS DATOS
+                            </a>
+                        </div>
+                        <div id="collapse3" class="collapse show" aria-labelledby="headingCollapse3">
+                            <div class="card-body">
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>SOLICITANTE</label>
+                                            <select class="form-control" id="solicitnt_admon" name="solicitnt_admon">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" id="nombre_Admon" name="nombre_Admon" class="form-control" placeholder="NOMBRE COMPLETO" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:5px">
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>No Poliza</label>
+                                            <input type="text" id="vin" name="vin" class="form-control" placeholder="VIN" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Motivo Consulta</label>
+                                            <select class="form-control" id="motivo_Admon" name="motivo_Admon">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="IntrsAdmon" style="margin-left:2px">
+                                                <label class="form-check-label" for="IntrsAdmon">
+                                                    <strong>Interes Operativo</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Resultado</label>
+                                            <select class="form-control" id="ResultAdmon" name="ResultAdmon">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-info btn-AgregarAdmon" style="background-color:#2494BE;">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Datos del documento Administrativo-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="color:brown">Total Admon: <b id="TtalAdmon"></b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>No Poliza</th>
+                                                    <th>Motivo Consulta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Table-Admon"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-GuardarAdmon">Guardar Datos</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--REGISTRAR PASAPORTE-->
+<div class="modal" id="Registro_Pasaporte" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="post" id="Form_Pasaporte" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro de Pasaporte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <div class="card">
+                        <div id="headingCollapse4" class="card-header">
+                            <a data-toggle="collapse" href="#collapse4" aria-expanded="true" aria-controls="collapse3" class="card-title lead">
+                                <i class="icon-android-arrow-dropdown"></i> DIGITE LOS DATOS
+                            </a>
+                        </div>
+                        <div id="collapse4" class="collapse show" aria-labelledby="headingCollapse4">
+                            <div class="card-body">
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>SOLICITANTE</label>
+                                            <select class="form-control" id="solicitnt_Pasapt" name="solicitnt_Pasapt">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" id="Nombre_P" name="Nombre_P" class="form-control" placeholder="NOMBRE COMPLETO" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Doc.Identidad</label>
+                                            <select class="form-control" id="Ident_Paspt" name="Ident_Paspt">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>No Documento</label>
+                                            <input type="text" id="No_Doc" name="No_Doc" class="form-control" placeholder="No Documento" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Motivo Consulta</label>
+                                            <select class="form-control" id="Mpasaporte" name="Mpasaporte">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="IntrsPasapt" style="margin-left:2px">
+                                                <label class="form-check-label" for="IntrsPasapt">
+                                                    <strong>Interes Operativo</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Resultado</label>
+                                            <select class="form-control" id="ResultPasapt" name="ResultPasapt">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-info btn-AgregarPasaport" style="background-color:#2494BE;">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Datos del documento Administrativo-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="color:brown">Total Pasaporte: <b id="TtalPasaporte"></b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Doc.Identidad</th>
+                                                    <th>Cod. Motivo</th>
+                                                    <th>Motivo Consulta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Table-Pasaporte"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-GuardarPasaporte">Guardar Datos</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--REGISTRAR CERTIFICADO -->
+<div class="modal" id="Registro_Certificado" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: 900px;">
+            <form action="" method="post" id="Form_Certificado" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro de Certificado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <div class="card">
+                        <div id="headingCollapse5" class="card-header">
+                            <a data-toggle="collapse" href="#collapse5" aria-expanded="true" aria-controls="collapse5" class="card-title lead">
+                                <i class="icon-android-arrow-dropdown"></i> DIGITE LOS DATOS
+                            </a>
+                        </div>
+                        <div id="collapse5" class="collapse show" aria-labelledby="headingCollapse5">
+                            <div class="card-body">
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>SOLICITANTE</label>
+                                            <select class="form-control" id="solicitnt_Certificado" name="solicitnt_Certificado">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vacío</label>
+                                            <input type="text" id="txtCertificado" name="txtCertificado" class="form-control" placeholder="NOMBRE COMPLETO" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" id="Nombre_Certificado" name="Nombre_Certificado" class="form-control" placeholder="NOMBRE COMPLETO" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:5px">
+
+                                    <div class="col-md-4">
+                                        <label>Fecha Nacimiento</label>
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" id="fcertificado" name="fcertificado" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Doc.Identidad</label>
+                                            <select class="form-control" id="Doc_Certifcado" name="Doc_Certifcado">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <label>Identidad</label>
+                                    <div class="form-row">
+                                        <div class="col-md-4">
+                                            <select id="Ident_certifdo" name="Ident_certifdo" class="form-control">
+                                                <option value="" disabled selected>TIPO</option>
+                                                <option value="cedula">cedula</option>
+                                                <option value="pasaporte">pasaporte</option>
+                                                <option value="visa">visa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:5px">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>País</label>
+                                            <select class="form-control" id="pais_Certifd" name="pais_Certifd">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var item in ViaRecepcion)
+                                                    {
+                                                        <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Motivo Consulta</label>
+                                            <select class="form-control" id="motivo_Certifd" name="motivo_Certifd">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--  <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Mensaje</label>
+                                            <select class="form-control" id="IdMensajeCertf" name="IdMensajeCertf">
+                                                <option value="">SELECCIONE</option>
+                                                <option value="entrada_internacional">Entrada Internacional</option>
+                                                <option value="entrada_nacional">Entrada Nacional</option>
+                                                <option value="salida_internacional">Salida Internacional</option>
+                                                <option value="salida_nacional">Salida Nacional</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                         -->
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Buscar Mensaje</label>
+                                            <div class="input-group" style="text-align:center;">
+                                                <input type="text" id="Idmensaje" name="Idmensaje" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <a class="btn btn-primary" href="#BuscarMensajes" id="abrirModal" role="button">Buscar</a>                                                   
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Expediente</label>
+                                            <input type="text" id="Exp_Certificado" name="Exp_Certificado" class="form-control" placeholder="EXPEDIENTE" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Resultado</label>
+                                            <select class="form-control" id="ResultCertifcdo" name="ResultCertifcdo">
+                                                <option value="">SELECCIONE</option>
+                                                @*@foreach (var S in Estructura)
+                                                    {
+                                                        <option value="@S.CodEstructura"> @S.Estructura</option>
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="IntrsCertifcado" style="margin-left:2px">
+                                                <label class="form-check-label" for="IntrsCertifcado">
+                                                    <strong>Interes Operativo</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-info btn-AgregarPasaport" style="background-color:#2494BE;">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Datos del documento Administrativo-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 style="color:brown">Total Certificado: <b id="TtalCertificado"></b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nombre Persona</th>
+                                                    <th>Fecha</th>
+                                                    <th>Doc.Identidad</th>
+                                                    <th>País Origen</th>
+                                                    <th>Motivo Consulta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Table-Certificado"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-Save_Certificado">Guardar Datos</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section modals{
+    @Html.Partial("~/Views/Consulta/_BuscarMensaje.cshtml")
+
+}
+
+
+@section scripts {
+    <script src="~/Recursos/Plugin/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Recursos/Librerias/Config2.js"></script>
+    <script src="~/Recursos/Librerias/Consulta/ListaBusqueda.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/Globales/FxGlobales.js?v=@DateTime.Now.Second.ToString()"></script>
+
+
+
+    <script type="text/javascript">
+
+        // Obtener elementos
+        const modal = document.getElementById('BuscarMensajes');
+        
+
+        // Mostrar la modal cuando se hace clic en el enlace
+        document.getElementById('abrirModal').addEventListener('click', function (event) {
+            event.preventDefault();
+            modal.style.display = 'block';
+        });
+       
+        // Cerrar la modal si se hace clic fuera de la misma
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        //función para ocultar los label de acuerdo al buscador
+        function MostrarFields() {
+            var selectedValue = document.getElementById("Buscar_Filtro").value;
+
+            // Control de visibilidad y requisitos de los campos según la selección
+            if (selectedValue === "1") {
+                document.getElementById("referenciaDiv").style.display = "block";
+                document.getElementById("referencia").setAttribute("required", "required");
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+                // Quitar los "required" de los otros campos
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "2") {
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "block";
+                document.getElementById("pers_Involucrada").setAttribute("required", "required");
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+                // Quitar los "required" de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "3") {
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "block";
+                document.getElementById("TipoDifusion").setAttribute("required", "required");
+                document.getElementById("MotivoDifusion").setAttribute("required", "required");
+                // Quitar los "required" de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "4") {
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "block";
+                document.getElementById("Finicial").setAttribute("required", "required");
+                document.getElementById("Ffinal").setAttribute("required", "required");
+                // Quitar los "required" de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+
+            } else {
+                // Si no se selecciona ningún filtro
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+            }
+        }
+
+        // Si usas jQuery y el modal se carga dinámicamente, usa:
+        $(document).ready(function () {
+            // Llama la función showFields() cuando el documento esté listo
+            MostrarFields();
+        });
+
+        //// O si no usas jQuery, puedes hacerlo con vanilla JS:
+        //window.onload = function () {
+        //    MostrarFields();
+        //};
+
+        //Muestra las tablas de acuerdo al chekbox seleccionado.
+        $(document).ready(function () {
+            $("input[type='radio']").change(function () {
+                // Ocultar todas las tablas
+                $(".table-container").hide();
+
+                // Mostrar la tabla correspondiente al radio seleccionado
+                if ($("#E_Internac").is(":checked")) {
+                    $("#tableEI").show();
+                } else if ($("#E_Nacional").is(":checked")) {
+                    $("#tableEN").show();
+                } else if ($("#S_Internacinal").is(":checked")) {
+                    $("#tableSI").show();
+                } else if ($("#S_Nacional").is(":checked")) {
+                    $("#tableSN").show();
+                }
+            });
+        });
+
+            $(document).on('click', '.btn-Capturar', function() {
+             // Get the IdMensaje value from the button's data-index attribute
+             var idMensaje = $(this).data('index');
+             
+             // Set the value of the input field with the IdMensaje
+                $('#Idmensaje').val(idMensaje);
+             });     
+
+
+              //Función para redirigir a las páginas
+                //$(document).ready(function () {
+                //    // Detectamos el cambio en el select
+                //    $('#IdMensajeCertf').change(function () {
+                //        var selectedValue = $(this).val();
+
+                //        // Si se selecciona una opción válida, redirigimos a la URL correspondiente
+                //        if (selectedValue) {
+                //            var url = '';
+
+                //            switch (selectedValue) {
+                //                case 'entrada_internacional':
+                //                    url = '/SMS_Entrada_Internac/EntradaInternacional'; // Cambia esto por la URL que desees
+                //                    break;
+                //                case 'entrada_nacional':
+                //                    url = '/SMS_Entrada_Nacional/EntradaNacional'; // Cambia esto por la URL que desees
+                //                    break;
+                //                case 'salida_internacional':
+                //                    url = '/SMS_Salida_Internac/SalidaInternacional'; // Cambia esto por la URL que desees
+                //                    break;
+                //                case 'salida_nacional':
+                //                    url = '/SMS_Salida_Nacional/SalidaNacional'; // Cambia esto por la URL que desees
+                //                    break;
+                //                default:
+                //                    break;
+                //            }
+
+                //            if (url) {
+                //                // Redirigir a la página
+                //                window.location.href = url;
+                //            }
+                //        }
+                //    });
+                //});
+
+
+
+
+
+
+
+    </script>
+
+
+
+}
+
+

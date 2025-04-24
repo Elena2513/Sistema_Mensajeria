@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Reportes INTSAI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+
+    <link href="~/Recursos/Plugin/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="d-grid gap-2 col-6 ms-auto" style="margin-left:800px">
+    <button class="btn btn-success btn-export" data-formato="pdf">PDF</button>
+    <button class="btn btn-info btn-export" data-formato="excel">Excel</button>
+    <button class="btn btn-secondary btn-export" data-formato="word">Word</button>
+</div>
+
+<div class="card">
+    @*<input type="hidden" id="usuario" name="usuario" value="<%= Session[" Cuenta"] %>">*@
+    <input type="hidden" id="usuario" name="usuario" value="Ericka">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <strong><label>TIPO</label></strong>
+                <select class="form-control" id="Tipo_Reporte" name="Tipo_Reporte" required>
+                    <option value="">SELECCIONE </option>
+                    <option value="1">Mensajeria Salida Internacional</option>
+                    <option value="2">Mensajeria Entrada Nacional</option>
+                    <option value="3">Mensajeria Recepcionada Mundial</option>
+                    <option value="4">Mensajeria Recepcionada Nicaragua</option>
+                    <option value="5">Consolidado Consultas OCN</option>
+                    <option value="6">Consolidado Consultas PE</option>
+                    <option value="7">Consolidado Consultas OCN usuarios</option>
+                    <option value="8">Consolidado Consultas Estructuras</option>
+                    <option value="9">Consolidado Consultas OCN-PE</option>
+                    <option value="10">Mensajeria Recepcionada</option>
+                    <option value="11">Mensajeria Recepcionada America</option>
+                    <option value="12">Mensajeria Recepcionada Nicaragua</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label>Fecha Inicial</label>
+            <div class="form-group">
+                <input type="date" class="form-control" id="FechaInicioRpt" name="FechaInicioRpt" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label>Fecha Final</label>
+            <div class="form-group">
+                <input type="date" class="form-control" id="FechaFinalRpt" name="FechaFinalRpt" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <button type="button" class="btn btn-success" id="btnReporte">Buscar</button>
+
+        </div>
+    </div>
+
+    <!--MENSAJERIA DE SALIDA INTERNACIONAL -->
+    @*<div id="reporte-completo"> </div>*@
+
+
+    <!--Tabla Consolidado de consultas por OCN- PTO EXTERNO -->
+    <div id="contenedor-tabla"></div>
+
+
+</div>
+
+
+
+
+@section scripts {
+    <script src="~/Recursos/Librerias/Consulta/GeneraReporte.js?@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/Config2.js?@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Plugin/datatables/jquery.dataTables.min.js"></script>
+
+    @*script para realizar la exportación de las tablas al formato PDF, WORD, EXCEL*@
+    <script src="~/Recursos/Librerias/Globales/exportarDatos.js?@DateTime.Now.Second.ToString()"></script> <!--Para exportar los datos planos al Buscar la información en Tabla -->        
+    <script src="~/Recursos/Libreria_Exportar/html2pdf.js"></script> <!--Esta libreria se usa para Exportar el PDF-->
+    <script src="~/Recursos/Libreria_Exportar/SheetJS.js"></script><!--Para Exportar los datos en Excel-->
+    <script src="~/Recursos/Libreria_Exportar/docx.js"></script><!--Para exportar los datos en word-->
+
+    <script type="text/javascript">
+
+        //GENERA EL REPORTE
+        $("#btnReporte").click(function () {
+            var tipo = parseInt($("#Tipo_Reporte").val(), 10);
+            switch (tipo) {
+                case 1:
+                    GenerarReporte.Rpt_SalidaInternacional();
+                    break;
+                case 2:
+                    GenerarReporte.Rpt_EntradaNacional();
+                    break;
+                case 3:
+                    GenerarReporte.Rpt_Msj_Global();
+                    break;
+                case 4:
+                    GenerarReporte.Rpt_Msj_Nicaragua();
+                    break;
+                case 9:
+                    GenerarReporte.ConsultaOCN_PE();
+                    break;
+                default:
+                    alert("TIPO DE REPORTE NO VALIDO");
+                    break;
+            }
+        });
+
+
+        //PARA EXPORTAR LAS TABLAS DE TEXTO PLANO DE LA VISTA REPORTES
+        $(".btn-export").click(function () {
+            let tipoRpt = parseInt($("#Tipo_Reporte").val(), 10);
+            let idTabla;
+            let NameMsj = "";
+
+            // Validar que el tipo de reporte sea válido
+            if (!tipoRpt || tipoRpt == 0) {
+                alert("PORFAVOR FILTRE PRIMERO EL REPORTE PARA EXPORTAR LOS DATOS.");
+                return;  // Detener la ejecución si no hay tipo de reporte seleccionado
+            }
+
+            switch (tipoRpt) {
+
+                case 5:
+                    NameMsj = "Consolidado de Consultas OCN";
+                    break;
+                case 6:
+                    NameMsj = "Consolidado de Consultas PE";
+                    break;
+                case 7:
+                    NameMsj = "Consolidado Consultas OCN-Usuarios";
+                    break;
+                case 8:
+                    NameMsj = "Consolidadp de Consultas por Estructura";
+                    break;
+                case 9:
+                    NameMsj = "Consolidado de Consultas por OCN-PE";
+                    idTabla = "tablaDatos";
+                    console.log($("#" + idTabla).html());
+
+                    //CleanSelect();  // Esto limpia el select de los reportes
+                    break;
+                default:
+                    alert("SELECCIONE UN TIPO DE REPORTE VÁLIDO")
+                    break;
+            }
+            let formato = $(this).attr("data-formato"); // Obtener formato del botón
+            exportarTabla(idTabla, formato, NameMsj);
+        });
+
+
+        function CleanSelect() {
+            $("#FechaInicioRpt").val("");
+            $("#FechaFinalRpt").val("");
+            $("#Tipo_Reporte").val("");
+        }
+
+
+
+
+                                    //$(document).ready(function () {
+                                    //    $("#btnReporte").click(function () {
+                                    //        // Capturar los valores del formulario
+                                    //        var tipoReporte = $("#Tipo_Reporte").val();
+                                    //        var FecIni = $("#FechaInicioRpt").val();
+                                    //        var FecFin = $("#FechaFinalRpt").val();
+                                    //        var cuenta = $("#usuario").val();
+                                    //        var Filtro = ""; // Puedes agregar un input para esto si lo necesitas
+
+                                    //        // Validaciones
+                                    //        if (tipoReporte === "" || FecIni === "" || FecFin === "") {
+                                    //            alert("Todos los campos son obligatorios.");
+                                    //            return;
+                                    //        }
+
+                                    //        // Convertir las fechas al formato adecuado (yyyy-MM-dd)
+                                    //        var formattedFecIni = new Date(FecIni).toISOString().split('T')[0]; // Obtiene solo la fecha sin la hora
+                                    //        var formattedFecFin = new Date(FecFin).toISOString().split('T')[0];
+
+                                    //        // Enviar datos con AJAX
+                                    //        $.ajax({
+                                    //            url: "/Reportes/GenerarReporte",
+                                    //            type: "GET",  // Usamos GET porque la acción del controlador también usa GET
+                                    //            data: {
+                                    //                tipoReporte: tipoReporte,
+                                    //                FecIni: formattedFecIni,
+                                    //                FecFin: formattedFecFin,
+                                    //                cuenta: cuenta,
+                                    //                Filtro: Filtro
+                                    //            },
+                                    //            xhrFields: {
+                                    //                responseType: 'blob' // Recibir el PDF como blob
+                                    //            },
+                                    //            success: function (data) {
+                                    //                debugger;
+                                    //                var blob = new Blob([data], { type: "application/pdf" });
+                                    //                var url = window.URL.createObjectURL(blob);
+                                    //                window.open(url); // Abre el PDF en una nueva pestaña
+                                    //            },
+                                    //            error: function (xhr, status, error) {
+                                    //                console.error("Error al generar el reporte: ", error);
+                                    //                alert("Error al generar el reporte.");
+                                    //            }
+                                    //        });
+                                    //    });
+                                    //});
+
+
+
+
+
+
+
+
+
+    </script>
+
+}

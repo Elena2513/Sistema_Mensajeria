@@ -1,0 +1,132 @@
+﻿/* Ocultar los radio buttons originales */
+input[type="radio"] {
+    display: none; /* Oculta los radio buttons por defecto */
+}
+
+    /* Estilos para los labels, incluyendo el tamaño y forma */
+    input[type="radio"] + label {
+        font-size: 18px; /* Tamaño de la fuente del label */
+        padding: 12px 20px; /* Espaciado alrededor del texto */
+        cursor: pointer; /* Cambia el cursor cuando pasa sobre el label */
+        position: relative; /* Necesario para el posicionamiento de los pseudo-elementos */
+        display: inline-block; /* Alinea el texto junto al radio button */
+        border: 2px solid #ccc; /* Borde alrededor del label */
+        border-radius: 30px; /* Bordes redondeados */
+        transition: all 0.3s ease-in-out; /* Transición suave para cambios */
+        background-color: #f9f9f9; /* Color de fondo inicial */
+    }
+
+    /* Cuando el radio button está seleccionado */
+    input[type="radio"]:checked + label {
+        background-color: #4CAF50; /* Color de fondo verde cuando está seleccionado */
+        color: white; /* Color del texto cuando está seleccionado */
+        border-color: #4CAF50; /* Borde verde cuando seleccionado */
+    }
+
+        /* Estilo del círculo interno (el botón real) cuando está seleccionado */
+        input[type="radio"]:checked + label::before {
+            content: ''; /* Crea el pseudo-elemento */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centra el círculo dentro del label */
+            width: 18px; /* Ancho del círculo */
+            height: 18px; /* Alto del círculo */
+            border-radius: 50%; /* Hace el círculo redondo */
+            background-color: white; /* Color blanco para el círculo */
+            box-shadow: 0 0 0 4px #4CAF50; /* Sombra verde alrededor */
+        }
+
+    /* Estilo del círculo pequeño que aparece por defecto */
+    input[type="radio"] + label::after {
+        content: ''; /* Crea el pseudo-elemento */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centra el círculo pequeño */
+        width: 14px; /* Tamaño del círculo pequeño */
+        height: 14px; /* Tamaño del círculo pequeño */
+        border-radius: 50%; /* Círculo pequeño */
+        background-color: white; /* Color blanco para el círculo pequeño */
+        border: 2px solid #ccc; /* Borde gris claro */
+        transition: all 0.3s ease-in-out; /* Transición suave */
+    }
+
+    /* Aumenta el tamaño del radio button y cambia su apariencia al pasar el mouse */
+    input[type="radio"]:hover + label::after {
+        border-color: #4CAF50; /* Cambia el borde del círculo a verde cuando pasa el mouse */
+        background-color: #4CAF50; /* Fondo verde cuando pasa el mouse */
+    }
+
+    /* Efecto de cuando el radio button está marcado */
+    input[type="radio"]:checked + label::after {
+        width: 22px; /* Tamaño del círculo cuando está seleccionado */
+        height: 22px; /* Tamaño del círculo cuando está seleccionado */
+        background-color: #4CAF50; /* Color verde del círculo cuando está seleccionado */
+    }
+
+
+
+   /* PARTE DE ESTILO PARA LAS TABLAS APLICANDO SCROLL VERTICAL Y HORIZONTAL*/
+
+
+/* Estilo para el contenedor principal */
+#tablesContainer {
+    margin: 20px;
+}
+
+/* Contenedor de la tabla con scroll y encabezado fijo */
+.table-container {
+    margin-bottom: 20px;
+}
+
+/* Contenedor que envuelve la tabla, para manejar el scroll */
+.table-wrapper {
+    max-height: 400px; /* Ajusta la altura según tus necesidades */
+    overflow: auto; /* Habilita el scroll si es necesario */
+    position: relative;
+}
+
+/* Estilo general para la tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    /* Estilo para los encabezados de la tabla */
+    .table th {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 1; /* Asegura que el encabezado quede encima del contenido al hacer scroll */
+        text-align: left;
+        padding: 8px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .table td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Estilo para los números y alineación */
+    .table th, .table td {
+        text-align: left;
+    }
+
+/* Estilo de los títulos de las tablas */
+.table-container h5 {
+    color: #037c6e;
+    font-size: 18px;
+}
+
+/* Estilo para los títulos en negrita dentro de los contenedores */
+.table-container b {
+    font-weight: bold;
+}
+
+/*tamaño para el modal de busqueda*/
+.size {
+    width: 1100px;
+}

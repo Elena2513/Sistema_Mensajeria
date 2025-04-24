@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Mensajeria Entrada Internacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+
+    <link href="~/Recursos/Plugin/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <a class="btn btn-success btn-new-smsEntrada tooltip-text-light-green " data-toggle="modal" data-target="#Registro_EI"><i class="fa fa-plus"></i>Registrar Solicitud de Entrada  </a>
+    </div>
+</div>
+
+<div class="card">
+    <div id="headingCollapse1" class="card-header">
+        <a data-toggle="collapse" href="#collapse1" aria-expanded="true" aria-controls="collapse1" class="card-title lead"><i class="icon-android-arrow-dropdown"></i>FILTRO</a>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <strong><label>TIPO DE BUSQUEDA</label></strong>
+                    <select class="form-control" id="Tipo_busqueda" onchange="showFields()" required>
+                        <option value="">SELECCIONE</option>
+                        <option value="1">REFERENCIA</option>
+                        <option value="2">NOMBRE DE PERSONA</option>
+                        <option value="3">TIPO Y MOTIVO DE DIFUSIÓN</option>
+                        <option value="4">FILTRAR POR FECHAS </option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="collapse1" role="tabpanel" aria-labelledby="headingCollapse1" class="card-collapse collapse in" aria-expanded="true">
+        <div class="card-body">
+            <div class="card-block">
+                <div class="row" style="margin-top:5px; display: none" id="referenciaDiv">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input class="form-control" id="referencia" placeholder="REFERENCIA" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:5px; display: none" id="personaDiv">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="pers_Involucrada" placeholder="PERSONA INVOLUCRADA" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:5px;display: none" id="difusionDiv">
+                    <div class="col-md-5">
+                        <strong> <label>Tipo de difusión</label></strong>
+                        <div class="form-group">
+                            <select id="TipoDifusion" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <strong><label>Motivo de Difusión</label></strong>
+                        <div class="form-group">
+                            <select id="MotivoDifusion" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:5px; display:none" id="fechasDiv">
+                    <div class="col-md-3">
+                        <label>Fecha Inicial</label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="Finicial" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Fecha Final</label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="Ffinal" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row-separator">
+                    <button type="button" class="btn btn-success btn-filtro btn-min-width mr-1 mb-1">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-12 col-12 col-lg-12" style="margin-top:10px">
+    <h5 style="color:#037c6e">Total de Registros: <b id="TotalEI"></b></h5>
+    <table class="table dataTable" id="list-EntradaInternacional">
+        <thead>
+            <tr>
+                <th>N&deg;</th>
+                <th>Fecha Mensaje</th>
+                <th>Remitente</th>
+                <th>Fecha Registro</th>
+                <th>Tipo</th>
+                <th>Motivo</th>
+                <th>Delito</th>
+                <th>Tipo Titulo</th>
+                <th>ReferenciaOCN</th>
+                <th>ReferenciaMensaje</th>
+                <th><i class="icon-android-arrow-dropdown"></i></th>
+            </tr>
+        </thead>
+        <tbody id="Table-EntradaInternacional"></tbody>
+    </table>
+</div>
+
+
+
+@section modals {
+    @Html.Partial("~/Views/SMS_Entrada_Internac/_RegistrarEntrada.cshtml")
+    @Html.Partial("~/Views/_ParcialesGlobales/_Parcial_AddPersonas.cshtml")
+    @Html.Partial("~/Views/_ParcialesGlobales/_Parcial_AddDelitos.cshtml")
+    @*@Html.Partial("~/Views/SMS_Entrada_Internac/_Parcial_AddArmas.cshtml")*@
+}
+
+@section scripts {
+    
+    <script src="~/Recursos/Librerias/EntradaInternacional/Entrada_Internacional.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/Globales/FxGlobales.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddDelitoEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddPersonaEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddArmaEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddVehiculoEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddAeronaveEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/EntradaInternacional/AddPasaporteEI.js?v=@DateTime.Now.Second.ToString()"></script>
+    <script src="~/Recursos/Librerias/Documento.js?v=@DateTime.Now.Second.ToString()"></script>
+
+
+    <script type="text/javascript">
+        //funcion que controla los eventos para ocultar y validar controles del filtro
+        function showFields() {
+            var selectedValue = document.getElementById("Tipo_busqueda").value;
+            if (selectedValue === "1") { //MOSTRAR EL CONTROL DE REFERENCIA
+                document.getElementById("referenciaDiv").style.display = "block";
+                //Hacer requerido el campo referencia en el filtro
+                document.getElementById("referencia").setAttribute("required", "required");
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+
+                // Quitar el atributo "required" de los otros campos
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "2") { //MOSTRAR EL CONTROL DE NOMBRE PERSONA
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "block";
+                document.getElementById("pers_Involucrada").setAttribute("required", "required");
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+
+                // Quitar el atributo "required" de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "3") { //MOSTRAR EL CONTROL DE TIPO Y MOTIVO DE DIFUSION
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "block";
+                document.getElementById("TipoDifusion").setAttribute("required", "required");
+                document.getElementById("MotivoDifusion").setAttribute("required", "required");
+
+                // Quitar el atributo "required" de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("Finicial").removeAttribute("required");
+                document.getElementById("Ffinal").removeAttribute("required");
+
+            } else if (selectedValue === "4") { // MOSTRAR LOS FILTROS POR EL INTERVALO DE FECHAS
+
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("fechasDiv").style.display = "block";
+                document.getElementById("Finicial").setAttribute("required", "required");
+                document.getElementById("Ffinal").setAttribute("required", "required");
+
+                //Quitar los atributos requires de los otros campos
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+
+
+            } else { // NO MOSTRAR NADA
+                document.getElementById("referenciaDiv").style.display = "none";
+                document.getElementById("personaDiv").style.display = "none";
+                document.getElementById("difusionDiv").style.display = "none";
+                document.getElementById("referencia").removeAttribute("required");
+                document.getElementById("pers_Involucrada").removeAttribute("required");
+                document.getElementById("TipoDifusion").removeAttribute("required");
+                document.getElementById("MotivoDifusion").removeAttribute("required");
+            }
+        }
+              
+        
+        $(".btn-new-smsEntrada").click(function () {
+            Eintenacional.Clear_Registro();
+        });
+       
+
+    </script>
+
+
+}

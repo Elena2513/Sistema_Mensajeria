@@ -1,0 +1,59 @@
+﻿@{
+    var Delitos = INTSAI_WEB.Models.Acciones.CatDelitosC.ListDelitos();
+}
+
+
+<div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="modal_AddDelitos">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <form action="#" method="post" id="Form-AddDelitos">
+                <input type="hidden" value="0" id="DelitosSI-Id" />
+                <div class="modal-header bg-blue">
+                    <h4 class="modal-title">
+                        Datos Delictivos
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Personas<span class="glyphicon glyphicon-asterisk"></span></label>
+                                <select id="Delitos_IdPersona" class="form-control" required></select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label>Delitos</label>
+                                <select class="form-control" id="CodDelitos" required>
+                                    <option value="">SELECCIONE</option>
+                                    @foreach (var d in Delitos)
+                                    {
+                                        <option value="@d.CodDelito"> @d.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary btn-AddDelitos">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

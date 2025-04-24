@@ -1,0 +1,404 @@
+﻿@{
+    var Estructura = INTSAI_WEB.Models.Acciones.CatEstructuraC.ListEstructuras();
+    var ViaRecepcion = INTSAI_WEB.Models.Acciones.CatViaRecepcionC.List_ViaRecepcion();
+}
+
+<div class="modal" id="Registro_SN" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
+        <div class="modal-content">
+            <form action="" method="post" id="Form_SalidaNacional" enctype="multipart/form-data">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro de Salida Nacional</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="SN-tab1" data-toggle="tab" aria-controls="tab1" href="#Registro_Solicitud" aria-expanded="true">Registro de Solicitud</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="SN-tab3" data-toggle="tab" aria-controls="tab3" href="#Delitos" aria-expanded="false">Delitos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="SN-tab5" data-toggle="tab" aria-controls="tab5" href="#Anexos" aria-expanded="false">Agregar Anexos</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content px-1 pt-1">
+                        <div role="tabpanel" class="tab-pane active" id="Registro_Solicitud" aria-expanded="true" aria-labelledby="SN-tab1" style="overflow-y: scroll; max-height: 400px;">
+
+                            <div class="row" style="margin-top:20px">
+                                <div class="col-md-3">
+                                    <label>Fecha Mensaje</label>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" id="SN_fmsj" name="SN_fmsj" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Vía Recepción</label>
+                                        <select class="form-control" id="SN_VR" name="SN_VR">
+                                            <option value="">SELECCIONE</option>
+                                            @foreach (var item in ViaRecepcion)
+                                            {
+                                                <option value="@item.CodViaRecepcion">@item.ViaRecepcion</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Destino</label>
+                                        <select class="form-control" id="SN_destino" name="SN_destino">
+                                            <option value="">SELECCIONE</option>
+                                            <option value="1">opcion 1</option>
+                                            <option value="2">opcion 2</option>
+                                            <option value="3">opcion 3</option>
+                                            <option value="4">opcion 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Prioridad</label>
+                                        <select class="form-control" id="SN_Prioridad" name="SN_Prioridad">
+                                            <option value="">SELECCIONE</option>
+                                            <option value="1">Rutina</option>
+                                            <option value="2">Urgente</option>
+                                            <option value="3">Muy Urgente</option>
+                                            <option value="4">Flash</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label>Tipo de difusión</label>
+                                    <div class="form-group">
+                                        <select class="form-control" id="SN_TipoDifusion" name="SN_TipoDifusion"> </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Motivo de Difusión</label>
+                                    <div class="form-group">
+                                        <select class="form-control" id="SN_MotivoDifusion" name="SN_MotivoDifusion"></select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label> Referencia</label>
+                                    <div class="form-group">
+                                        <textarea id="SN_Referencia" rows="1" class="form-control" placeholder="Mensaje de ReferenciaOCN" name="SN_Referencia"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección de agregar persona -->
+                            <div class="card">
+                                <div id="headingCollapse2" class="card-header">
+                                    <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2" class="card-title lead"><i class="icon-android-arrow-dropdown"></i>Registrar Persona</a>
+                                </div>
+                                <div id="collapse2" class="collapse show" aria-labelledby="headingCollapse2">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <label>Nombre Completo</label>
+                                                <div class="input-group" style="text-align:center;">
+                                                    <input type="text" id="SN_nombrePers" name="SN_nombrePers" class="form-control" placeholder="Ingrese el Nombre Completo" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-AddPersonasSN" style="background-color:#2494BE;"> Agregar Persona</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Datos de la persona -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 style="color:brown">PERSONAS: <b id="Ttalpers"></b></h5>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Nombre Completo</th>
+                                                            <th>Eliminar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="Table-personasSN"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección de Registrar Arma -->
+                            <div class="card">
+                                <div id="headingCollapse3" class="card-header">
+                                    <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3" class="card-title lead">
+                                        <i class="icon-android-arrow-dropdown"></i>Registrar Arma
+                                    </a>
+                                </div>
+                                <div id="collapse3" class="collapse show" aria-labelledby="headingCollapse3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Registre los datos del Arma</label>
+                                                <div class="form-row">
+                                                    <div class="col-md-3">
+                                                        <select id="Tipo_SN" name="Tipo_SN" class="form-control">
+                                                            <option value="" disabled selected>Tipo de Arma</option>
+                                                            <option value="Pistola">Pistola</option>
+                                                            <option value="Rifle">Rifle</option>
+                                                            <option value="Escopeta">Escopeta</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" id="Modelo_SN" name="Modelo_SN" class="form-control" placeholder="Modelo del Arma" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" id="Serie_SN" name="Serie_SN" class="form-control" placeholder="Serie del Arma" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-info btn-AgregArmasSN" style="background-color:#2494BE;">Agregar Arma</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Datos del Arma -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 style="color:brown">Armas: <b id="TtalArmas"></b></h5>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Tipo</th>
+                                                            <th>Modelo</th>
+                                                            <th>Serie</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="Table-ArmasSN"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección de Registrar Vehículos -->
+                            <div class="card">
+                                <div id="headingCollapse4" class="card-header">
+                                    <a data-toggle="collapse" href="#collapse4" aria-expanded="true" aria-controls="collapse4" class="card-title lead">
+                                        <i class="icon-android-arrow-dropdown"></i>Registrar Vehículo
+                                    </a>
+                                </div>
+                                <div id="collapse4" class="collapse show" aria-labelledby="headingCollapse4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <label>Registre los datos del Vehículo</label>
+                                                <div class="input-group" style="text-align:center;">
+                                                    <input type="text" id="vin_SN" name="vin_SN" class="form-control" placeholder="Chasis/Vin" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-AddVhiculoSN" style="background-color:#2494BE;">Agregar Vehiculo</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Datos del Vehiculo -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 style="color:brown">Vehiculos: <b id="TtalVehiculos"></b></h5>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Chasis/Vin</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="Table-VehiculoSN"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección de Registrar Aeronave -->
+                            <div class="card">
+                                <div id="headingCollapse5" class="card-header">
+                                    <a data-toggle="collapse" href="#collapse5" aria-expanded="true" aria-controls="collapse5" class="card-title lead">
+                                        <i class="icon-android-arrow-dropdown"></i>Verificación de Aeronave
+                                    </a>
+                                </div>
+                                <div id="collapse5" class="collapse show" aria-labelledby="headingCollapse5">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <label>Verificación de Aeronave</label>
+                                                <div class="input-group" style="text-align:center;">
+                                                    <input type="text" id="NumSerie_SN" name="NumSerie_SN" class="form-control" placeholder="Ingrese descripción de la Aeronave ( N° de Serie, etc )" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-AddAeroSN" style="background-color:#2494BE;">Agregar Aeronave</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Datos de la Aeronave -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 style="color:brown">Aeronave: <b id="TtalAeronave"></b></h5>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>No Serie</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="Table-AeronaveSN"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección Registro de Pasaporte -->
+                            <div class="card">
+                                <div id="headingCollapse6" class="card-header">
+                                    <a data-toggle="collapse" href="#collapse6" aria-expanded="true" aria-controls="collapse6" class="card-title lead">
+                                        <i class="icon-android-arrow-dropdown"></i>Registrar Pasaporte
+                                    </a>
+                                </div>
+                                <div id="collapse6" class="collapse show" aria-labelledby="headingCollapse6">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Registre los datos del pasaporte</label>
+                                                <div class="form-row">
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="NoPasaporte_SN" name="NoPasaporte_SN" class="form-control" placeholder="Número de Pasaporte" />
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <select id="PaisEmision_SN" name="PaisEmision_SN" class="form-control">
+                                                            <option value="" disabled selected>Seleccione País</option>
+                                                            <option value="Costa Rica">Costa Rica</option>
+                                                            <option value="Nicaragua">Nicaragua</option>
+                                                            <option value="El Salvador">El Salvador</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-info btn-AddPasaportSN" style="background-color:#2494BE;">Agregar Pasaporte</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Datos del Pasaporte -->
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 style="color:brown">Pasaporte: <b id="TtalPasaporte"></b></h5>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>No Pasaporte</th>
+                                                            <th>Pais Emisión</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="Table-PasaporteSN"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        
+                        </div>
+
+                        <!--Agregar Delitos-->
+                        <div class="tab-pane" id="Delitos" aria-labelledby="SN-tab3">
+                            <div class="row" id="tablescroll">
+                                <div class="col-12 table-responsive">
+                                    <h5 style="color:brown">Delitos: <b id="TotalDelitos"></b></h5>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nombre Persona</th>
+                                                <th>CodDelito</th>
+                                                <th>Delito</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Tabla-DelitoSN"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="8" class="text-center">
+                                                    <a class="btn btn-success btn-addDelitoSN" data-toggle="modal" data-target="#modal_AddDelitos"><i class="icon-file-text"></i> Agregar Delitos </a>
+                                                </td>
+
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--ANEXOS-->
+                        <div class="tab-pane" id="Anexos" aria-labelledby="SN-tab5">
+                            <div class="row" style="margin-top:40px">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>Seleccione Correo</label>
+                                        <label id="projectinput7" class="file center-block">
+                                            <input type="file" id="archivoEmailSN" name="archivoEmailSN">
+                                            <span class="icon-email"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info btn-Guardar">Guardar Datos</button>                    
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,107 @@
+﻿
+@{
+    var Pais = INTSAI_WEB.Models.Acciones.CatPaisC.ListPaises();
+}
+
+
+<div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="modal_AgregarArmas">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form action="#" method="post" id="Armas-add-form">
+                <input type="hidden" value="0" id="Armas-Id" />
+                <div class="modal-header bg-blue">
+                    <h4 class="modal-title">
+                        Datos del Arma
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Marca</label>
+                                <select class="form-control" id="Marca_Arma" required>
+                                    <option value="">SELECCIONE</option>
+                                    <option value="">000</option>
+                                    <option value="">0000</option>
+                                    <option value="">3232</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Modelo</label>
+                                <select class="form-control" id="Modelo_Arma" required>
+                                    <option value="">SELECCIONE</option>
+                                    <option value="">...</option>
+                                    <option value="">...</option>
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Calíbre o Medida </label>
+                            <div class="form-group">
+                                <input class="form-control" id="calibre_arma" required />
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Serie</label>
+                            <div class="form-group">
+                                <input required class="form-control" id="serie_arma" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>País</label>
+                                <select class="form-control" id="Pais_arma" required>
+                                    <option value="">SELECCIONE</option>
+                                    @foreach (var P in Pais)
+                                    {
+                                        <option value="@P.CodPais"> @P.Pais</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Lugar</label>
+                            <div class="form-group">
+                                <input required class="form-control" id="Lugar_arma" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Estado Arma</label>
+                            <div class="form-group">
+                                <input required class="form-control" id="Estado_arma" />
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary btn-AddDelitos">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

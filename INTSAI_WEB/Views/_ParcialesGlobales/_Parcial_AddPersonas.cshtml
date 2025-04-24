@@ -1,0 +1,71 @@
+﻿@{
+    var PaisOrigen = INTSAI_WEB.Models.Acciones.CatPaisC.ListPaises();
+    var Involucrado = INTSAI_WEB.Models.Acciones.CatTipo_InvolucradoC.List_TipoInvolucrado();
+
+}
+
+<!-- MODAL PARA AGREGAR PERSONAS EN LA SOLICITUD DE ENTRADA INTERNACIONAL -->
+<div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="modal_AddPersona">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form action="#" method="post" id="Form-AddPersona">
+                <input type="hidden" value="0" id="personaSI-Id" />
+                <div class="modal-header bg-blue">
+                    <h4 class="modal-title">
+                        Datos de la persona
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10 col-10">
+                            <label>Nombre Completo</label>
+                            <div class="form-group">
+                                <input class="form-control" required id="NamePers" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>País de Origen</label>
+                                <select class="form-control" id="CodPaisOrigen" required>
+                                    <option value="">SELECCIONE</option>
+                                    @foreach (var P in PaisOrigen)
+                                    {
+                                        <option value="@P.CodPais"> @P.Pais</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Tipo de Involucrado</label>
+                                <select class="form-control" id="CodTipoInvolucrado" required>
+                                    <option value="">SELECCIONE</option>
+                                    @foreach (var I in Involucrado)
+                                    {
+                                        <option value="@I.CodTipoInvolucrado"> @I.TipoInvolucrado</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary btn-addPerson">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

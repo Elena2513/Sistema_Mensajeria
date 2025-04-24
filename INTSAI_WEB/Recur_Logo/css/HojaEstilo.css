@@ -1,0 +1,104 @@
+/* Fondo general del cuerpo */
+body {
+    background: #cee6e4 !important; /* Color original del fondo del cuerpo */
+}
+
+/* Fondo azul marino para el cuadro de login */
+.card-header {
+    background-color: #001f3f !important; /* Azul marino */
+    color: white; /* Letras blancas */
+    font-family: Calibri; /* Fuente Calibri */
+}
+
+/* Cambiar el tamaño de la imagen del logo */
+.icon-image {
+    width: 250px !important; /* Aumentar tamaño del logo */
+    height: auto; /* Mantener la proporción */
+}
+
+/* Fondo celeste para el div con clase card-body collapse in */
+.card-body.collapse.in {
+    background-color: #b3e5fc !important; /* Celeste */
+}
+
+/* Especificar fuente y color blanco para todos los textos dentro del card */
+.card, .card label, .card button, .card {
+    font-family: Calibri;
+    color: white !important; /* Letras blancas */
+    border-radius: 40px;
+    overflow: hidden;
+    border: 1px solid #808080;
+}
+
+/* Fuente y tamaño del encabezado */
+#Encabezado {
+    font-family: Calibri;
+    font-size: 20px;
+    color: orange !important; /* Letras Naranjas */
+    margin-bottom: 0; /* Eliminar margen inferior */
+    padding-top: 10px; /* Espaciado superior */
+}
+
+#subtexto {
+    font-family: Calibri;
+    font-size: 20px;
+    color: white !important; /* Letras blancas */
+    margin-bottom: 0; /* Eliminar margen inferior */
+    padding-top: 10px; /* Espaciado superior */
+}
+
+#subti {
+    font-family: Calibri;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: black !important; /* Letras negras */
+    margin-bottom: 0; /* Eliminar margen inferior */
+    padding-top: 10px; /* Espaciado superior */
+}
+
+#txt {
+    font-family: Calibri;
+    font-size: 18px;
+    color: darkblue !important; /* Letras negras */
+    font-weight: bold;
+    
+}
+
+.text-danger {
+    font-family: Calibri;
+    font-size: 20px;
+    color: red !important; /* Letras negras */
+    font-weight: bold;
+}
+#icono {
+    color: black;
+    font-weight: bold;
+}
+
+.input-group {
+    border: 2px solid #477ea7;
+    border-radius: 10px;
+    width: 270px;    
+}
+
+.form-body {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#card_Principal{
+    width:550px;
+    height:730px;
+    padding:20px;
+    box-sizing:border-box;
+    border: 1px solid;
+    overflow:hidden;
+}
+
+.btn {
+    font-family: Calibri;
+    font-size: 20px;
+}

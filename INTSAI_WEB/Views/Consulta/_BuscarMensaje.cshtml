@@ -1,0 +1,243 @@
+﻿<div class="modal" id="BuscarMensajes" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" id="size">
+            <form action="" method="post" id="Form_BuscarMensaje" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Buscar Mensajería</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" id="tablescroll">
+                    <!-- Radio Buttons -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="radio" id="E_Internac" name="tipo" value="0">
+                                <label for="E_Internac">Entrada Internacional</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="radio" id="E_Nacional" name="tipo" value="1">
+                                <label for="E_Nacional">Entrada Nacional</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="radio" id="S_Internacinal" name="tipo" value="2">
+                                <label for="S_Internacinal">Salida Internacional</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="radio" id="S_Nacional" name="tipo" value="3">
+                                <label for="S_Nacional">Salida Nacional</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta integrada dentro del modal -->
+                    <div class="card mt-4">
+                        <div id="headingCollapse1" class="card-header">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <strong><label>TIPO DE BUSQUEDA</label></strong>
+                                        <select class="form-control" id="Buscar_Filtro" onchange="MostrarFields()" required>
+                                            <option value="">SELECCIONE</option>
+                                            <option value="1">REFERENCIA</option>
+                                            <option value="2">NOMBRE DE PERSONA</option>
+                                            <option value="3">TIPO Y MOTIVO DE DIFUSIÓN</option>
+                                            <option value="4">FILTRAR POR FECHAS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de búsqueda -->
+                        <div id="collapse1" role="tabpanel" aria-labelledby="headingCollapse1" class="card-collapse collapse in" aria-expanded="true">
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <!-- Campos de búsqueda -->
+                                    <div class="row" style="margin-top:5px; display: none" id="referenciaDiv">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <input class="form-control" id="referencia" placeholder="REFERENCIA" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:5px; display: none" id="personaDiv">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" id="pers_Involucrada" placeholder="PERSONA INVOLUCRADA" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:5px;display: none" id="difusionDiv">
+                                        <div class="col-md-5">
+                                            <strong><label>Tipo de difusión</label></strong>
+                                            <div class="form-group">
+                                                <select id="TipoDifusion" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <strong><label>Motivo de Difusión</label></strong>
+                                            <div class="form-group">
+                                                <select id="MotivoDifusion" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:5px; display:none" id="fechasDiv">
+                                        <div class="col-md-3">
+                                            <label>Fecha Inicial</label>
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" id="Finicial" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Fecha Final</label>
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" id="Ffinal" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-separator">
+                                        <button type="button" class="btn btn-success btn-BuscaFiltro btn-min-width mr-1 mb-1">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor de tablas -->
+                    <div id="tablesContainer">
+                        <!-- TABLA ENTRADA INTERNACIONAL -->
+                        <div class="table-container" id="tableEI" style="display:none;">
+                            <h5>Registros Entrada Internacional: <b id="TtalEI"></b></h5>
+                            <div class="table-wrapper">
+                                <div class="table-responsive">
+                                    <table class="table dataTable" id="list-msjEI">
+                                        <thead>
+                                            <tr>
+                                                <th>N&deg;</th>
+                                                <th>Fecha Mensaje</th>
+                                                <th>Remitente</th>
+                                                <th>Fecha Registro</th>
+                                                <th>Tipo</th>
+                                                <th>Motivo</th>
+                                                <th>Delito</th>
+                                                <th>Tipo Titulo</th>
+                                                <th>ReferenciaOCN</th>
+                                                <th>ReferenciaMensaje</th>
+                                                <th><i class="icon-android-arrow-dropdown"></i></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Table-msjEI"></tbody>
+                                    </table>
+                                </div>                             
+                            </div>
+                        </div>
+
+                        <!-- TABLA ENTRADA NACIONAL -->
+                        <div class="table-container" id="tableEN" style="display:none;">
+                            <h5>Registros Entrada Nacional: <b id="TtalEN"></b></h5>
+                            <div class="table-wrapper">
+                                <div class="table-responsive">
+                                    <table class="table dataTable" id="list-msjEN">
+                                        <thead>
+                                            <tr>
+                                                <th>N&deg;</th>
+                                                <th>Fecha Mensaje</th>
+                                                <th>Remitente</th>
+                                                <th>Fecha Registro</th>
+                                                <th>Tipo</th>
+                                                <th>Motivo</th>
+                                                <th>Delito</th>
+                                                <th>Tipo Titulo</th>
+                                                <th>ReferenciaOCN</th>
+                                                <th>ReferenciaMensaje</th>
+                                                <th><i class="icon-android-arrow-dropdown"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Table-msjEN"></tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                        </div>
+
+
+                        <!-- TABLA SALIDA INTERNACIONAL -->
+                        <div class="table-container" id="tableSI" style="display:none;">
+                            <h5>Registros Salida Internacional: <b id="TtalSI"></b></h5>
+                            <div class="table-wrapper">
+                                <div class="table-responsive">
+                                    <table class="table dataTable" id="list-msjSI">
+                                        <thead>
+                                            <tr>
+                                                <th>N&deg;</th>
+                                                <th>Fecha Mensaje</th>
+                                                <th>Remitente</th>
+                                                <th>Fecha Registro</th>
+                                                <th>Tipo</th>
+                                                <th>Motivo</th>
+                                                <th>Delito</th>
+                                                <th>Tipo Titulo</th>
+                                                <th>ReferenciaOCN</th>
+                                                <th>ReferenciaMensaje</th>
+                                                <th><i class="icon-android-arrow-dropdown"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Table-msjSI"></tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <!-- TABLA SALIDA NACIONAL -->
+                        <div class="table-container" id="tableSN" style="display:none;">
+                            <h5>Registros Salida Nacional: <b id="TotalSN"></b></h5>
+                            <div class="table-wrapper">
+                                <div class="table-responsive">
+                                    <table class="table dataTable" id="list-msjSN">
+                                        <thead>
+                                            <tr>
+                                                <th>N&deg;</th>
+                                                <th>Fecha Mensaje</th>
+                                                <th>Remitente</th>
+                                                <th>Fecha Registro</th>
+                                                <th>Tipo</th>
+                                                <th>Motivo</th>
+                                                <th>Delito</th>
+                                                <th>Tipo Titulo</th>
+                                                <th>ReferenciaOCN</th>
+                                                <th>ReferenciaMensaje</th>
+                                                <th><i class="icon-android-arrow-dropdown"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Table-msjSN"></tbody>
+                                    </table>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section styles {
+    <link href="~/Recursos/Consulta/BuscarMensaje.css" rel="stylesheet" />
+
+}
